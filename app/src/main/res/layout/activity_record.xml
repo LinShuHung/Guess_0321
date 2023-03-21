@@ -14,9 +14,9 @@
         android:layout_marginTop="60dp"
         android:ems="10"
         android:gravity="center_horizontal"
+        android:hint="Please input your name"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="null"
         app:layout_constraintStart_toEndOf="@+id/nameInformation"
         app:layout_constraintTop_toTopOf="parent" />
 
