@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
                     binding.contentLayout.counterText.hint = "0"
                     binding.contentLayout.counterText.text = "0"
                 })
+                .setNeutralButton("Cancel", null)
                 .show()
         }
         binding.contentLayout.GuessButton.setOnClickListener {view->

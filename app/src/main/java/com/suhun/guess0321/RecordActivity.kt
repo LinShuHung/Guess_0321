@@ -30,7 +30,8 @@ class RecordActivity : AppCompatActivity() {
                 .edit().putString("RESULT", writeString)
                 .commit()
             Log.d(tag, "Result is $writeString")
-            var intent:Intent = Intent(this, MainActivity::class.java)
+            var intent:Intent = Intent(this, ShowScoreActivity::class.java)
+            intent.putExtra("SHOW", writeString)
             startActivity(intent)
         }
 
