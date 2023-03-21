@@ -1,5 +1,6 @@
 package com.suhun.guess0321
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -43,13 +44,18 @@ class MainActivity : AppCompatActivity() {
         binding.contentLayout.GuessButton.setOnClickListener {view->
             var userInupt:Int = binding.contentLayout.userInputEditText.text.toString().toInt()
             var message:String = secretNumber.verifyResult(resources, userInupt)
-            var bingoean = if(secretNumber.verify(userInupt)==0) true else false
+            var bingo = if(secretNumber.verify(userInupt)==0) true else false
             binding.contentLayout.counterText.text = "${secretNumber.guessCount.toString()} times"
             AlertDialog.Builder(this)
                 .setTitle("Guess Result")
                 .setMessage(message)
                 .setPositiveButton("ok", {dialog, which->
                     binding.contentLayout.userInputEditText.text = null
+                    if(bingo){
+                        val intent:Intent = Intent(this, RecordActivity::class.java)
+                        intent.putExtra("COUNT", secretNumber.guessCount)
+                        startActivity(intent)
+                    }
                 })
                 .show()
         }
