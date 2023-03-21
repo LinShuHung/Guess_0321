@@ -10,12 +10,15 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import com.suhun.guess0321.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    var tag = MainActivity::class.java.simpleName
+    var secretNumber:SecretNumber = SecretNumber()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -27,9 +30,28 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAnchorView(R.id.fab)
-                .setAction("Action", null).show()
+            AlertDialog.Builder(this)
+                .setTitle("Reset Game")
+                .setMessage("Are you sure?").setPositiveButton("Ok", {dialog, which->
+                    secretNumber.resetAll()
+                    binding.contentLayout.userInputEditText.text = null
+                    binding.contentLayout.counterText.hint = "0"
+                    binding.contentLayout.counterText.text = "0"
+                })
+                .show()
+        }
+        binding.contentLayout.GuessButton.setOnClickListener {view->
+            var userInupt:Int = binding.contentLayout.userInputEditText.text.toString().toInt()
+            var message:String = secretNumber.verifyResult(resources, userInupt)
+            var bingoean = if(secretNumber.verify(userInupt)==0) true else false
+            binding.contentLayout.counterText.text = "${secretNumber.guessCount.toString()} times"
+            AlertDialog.Builder(this)
+                .setTitle("Guess Result")
+                .setMessage(message)
+                .setPositiveButton("ok", {dialog, which->
+                    binding.contentLayout.userInputEditText.text = null
+                })
+                .show()
         }
     }
 
