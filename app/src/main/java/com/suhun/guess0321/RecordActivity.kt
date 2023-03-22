@@ -21,10 +21,10 @@ class RecordActivity : AppCompatActivity() {
                 .getString("RESULT", "null")
             var writeString:String
             if(recordResult.equals("null")){
-                writeString = "$playerName /t $count"
+                writeString = "$playerName \t $count"
 
             }else{
-                writeString = "$recordResult /n $playerName /t $count /n"
+                writeString = "$recordResult \n $playerName \t $count \n"
             }
             getSharedPreferences("record_guess", MODE_PRIVATE)
                 .edit().putString("RESULT", writeString)
